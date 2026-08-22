@@ -9,6 +9,21 @@ img, picture, video, canvas, svg {
   max-width: 100%;
 }
 
+button{
+  border-radius: 5px;
+  width: 50px;
+}
+
+button:hover{
+  background-color: rgb(31, 184, 207);
+}
+
+input{
+  border-radius: 8px;
+  height: 30px;
+  padding: 2px;
+}
+
 body {
   min-height: 100vh;
   font-family: system-ui, sans-serif;
@@ -16,4 +31,82 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: linear-gradient(360deg, rgb(31, 207, 195) 0.00%, rgb(31, 145, 207) 100.00%);}
+
+header{
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  justify-content: space-between;
+  padding: 24px;
+  padding-right: 15%;
+}
+
+.display, .today{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px;
+}
+
+.display{
+  width: 70%;
+}
+
+.today{
+  width: 100%;
+  align-items: flex-start;
+
+}
+
+.L1, .info{
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: center;
+}
+
+.L1 > div {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+}
+
+.L1 > div > p:hover{
+  color: brown;
+  cursor: pointer;
+}
+
+.L1{
+  width: 100%;
+  justify-content: space-between;
+}
+
+.nextDays{
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+  gap: 6px;
+}
+
+#big-logo{
+  width: 30%;
+}
+
+#logo{
+  width: 50%;
+}
+
+hr{
+  border: 1px solid rgb(39, 39, 39);
+  width: 100%;
+}
+
+.description{
+  width: 100%;
+  padding-bottom: 16px;
+  padding-top: 16px;
+}
+
+#head-hr{
+  width: 80%;
 }
