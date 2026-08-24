@@ -1,3 +1,19 @@
+:root {
+
+  --color-bg-primary: #12161f;      /* fond principal de la page */
+  --color-bg-secondary: #1a2030;    /* cartes, sections (current weather) */
+  --color-bg-tertiary: #232b3d;     /* éléments dans les cartes (forecast items) */
+  --color-border: #2e3648;          /* séparateurs, bordures subtiles */
+
+  --color-primary-500: #3b82f6;     /* bleu ciel, boutons, liens, icône soleil */
+  --color-primary-400: #60a5fa;     /* hover, éléments actifs */
+  --color-primary-600: #2563eb;     /* pressed state */
+
+  --color-text-primary: #f1f5f9;    /* titres, température principale */
+  --color-text-secondary: #94a3b8;  /* labels, sunrise/sunset, unités */
+  --color-text-muted: #64748b;      /* texte très discret, placeholders */
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -10,18 +26,28 @@ img, picture, video, canvas, svg {
 }
 
 button{
-  border-radius: 5px;
+  border-radius: 8px;
   width: 50px;
+  height: 25px;
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-muted);
+  border: 2px solid var(--color-border);
 }
 
 button:hover{
-  background-color: rgb(31, 184, 207);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-secondary);
+  cursor: pointer;
 }
 
 input{
-  border-radius: 8px;
+  border-radius: 7px;
   height: 30px;
   padding: 2px;
+  padding-left: 8px;
+  background-color: var(--color-bg-tertiary);
+  border: var(--color-border);
+  color: var(--color-text-muted);
 }
 
 body {
@@ -31,7 +57,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(360deg, rgb(31, 207, 195) 0.00%, rgb(31, 145, 207) 100.00%);}
+  background: var(--color-bg-primary);
+  color: var(--color-text-secondary);
+}
+
+body > h1, h2, h3, h4, h5, h6{
+  color: var(--color-text-primary);
+}
 
 header{
   display: flex;
@@ -51,12 +83,18 @@ header{
 
 .display{
   width: 70%;
+  gap: 6px;
+  opacity: 0; /* Hide content until loading completes */
+  transition: opacity 0.5s ease; /* Fade-in animation for content */
 }
 
 .today{
   width: 100%;
   align-items: flex-start;
-
+  background-color: var(--color-bg-secondary);
+  padding: 16px;
+  border-radius: 8px;
+  margin: 8px;
 }
 
 .L1, .info{
@@ -66,13 +104,31 @@ header{
   justify-content: center;
 }
 
-.L1 > div {
+.details{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.temp{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+header > div {
   display: flex;
   flex-direction: row;
   gap: 2px;
 }
 
-.L1 > div > p:hover{
+.selected{
+  color: brown;
+}
+
+header > div > p:hover{
   color: brown;
   cursor: pointer;
 }
@@ -83,9 +139,31 @@ header{
 }
 
 .nextDays{
-  display: grid;
-  grid-template-columns: repeat(7, auto);
+  display: flex;
+  flex-direction: row;
   gap: 6px;
+
+  max-width: 100%;
+
+  overflow-x: auto;            /* Scroll horizontal */
+  overflow-y: hidden;
+
+  scroll-snap-type: x mandatory;
+  padding-bottom: 10px;
+}
+
+.day{
+  flex: 0 0 auto;              /* Empêche la réduction */
+  width: 160px;                /* Taille fixe pour chaque day */
+  background: var(--color-bg-tertiary);
+  padding: 8px;
+  border-radius: 8px;
+  scroll-snap-align: start;    /* Optionnel : alignement propre */
+}
+
+.day:hover{
+  background-color: var(--color-bg-secondary);
+  cursor: pointer;
 }
 
 #big-logo{
@@ -94,6 +172,15 @@ header{
 
 #logo{
   width: 50%;
+}
+
+.details > p{
+  display: flex;
+  gap: 4px;
+}
+
+#little-logo{
+  height: 20px;
 }
 
 hr{
@@ -109,4 +196,45 @@ hr{
 
 #head-hr{
   width: 80%;
+}
+
+/* Loading Screen Overlay */
+.loading-screen {
+    position: fixed; /* Fixes the overlay to the viewport */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    background-color: var(--color-bg-primary); /* White background (customize as needed) */
+    display: flex; /* Centers the spinner */
+    justify-content: center; /* Horizontal centering */
+    align-items: center; /* Vertical centering */
+    z-index: 9999; /* Ensures it’s above all other content */
+    transition: opacity 0.5s ease; /* Smooth fade-out animation */
+}
+
+/* Show main content when loading screen is hidden */
+.loading-screen.hidden + .display {
+    opacity: 1;
+}
+
+/* Spinner Styles */
+.spinner {
+    width: 50px; /* Spinner size */
+    height: 50px; /* Spinner size */
+    border: 5px solid #f3f3f3; /* Light gray border (background) */
+    border-top: 5px solid #3498db; /* Blue border (accent color) */
+    border-radius: 50%; /* Makes it a circle */
+    animation: spin 1s linear infinite; /* Rotation animation */
+}
+ 
+/* Spinner Rotation Animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); } /* Start at 0 degrees */
+    100% { transform: rotate(360deg); } /* Rotate 360 degrees */
+}
+
+.loading-screen.hidden {
+    opacity: 0; /* Fades out the loading screen */
+    pointer-events: none;
 }

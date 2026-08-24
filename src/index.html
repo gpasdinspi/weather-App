@@ -3,21 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>WeatherApp</title>
 </head>
 
 <body>
+
     <header>
         <h3>WeatherApp</h3>
         <form >
             <label for="city"></label>
-            <input type="text" id="city" placeholder="location">
+            <input type="text" id="city" placeholder="search a city">
             <button class="city-btn">search</button>
         </form>
+        <div>
+            <p class="celcius">°C</p> | <p class="fahrenheit selected">°F</p>
+        </div>
     </header>
     <hr id="head-hr">
-    
 
+     <!-- Loading Screen Overlay -->
+    <div class="loading-screen hidden" aria-label="Loading...">
+        <div class="spinner"></div> <!-- CSS Spinner -->
+        <!-- Optional: Add text like "Loading..." or your logo here -->
+    </div>
+    
     <div class="display">
 
     </div>
